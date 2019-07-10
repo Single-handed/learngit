@@ -5,16 +5,16 @@
 typedef struct listNode {
   int data;
   struct listNode *next;
-} linkList;
+} listNode,  linkList;
 
 /* 求链表长度 */
 int linkListLength(linkList *L)
 {
   int count;
-  linkList *p = L;
+  listNode *p = L->next;
   
   count = 0;
-  while (p->next != NULL) {
+  while (p != NULL) {
       p = p->next;
       count++;
     } 
@@ -25,7 +25,7 @@ int linkListLength(linkList *L)
 /* 插入结点 */
 void linkListInsert(linkList *L, int i, int e)
 {
-  linkList *p = L;
+  listNode *p = L;
   int count;
   
   count = 0;
@@ -34,7 +34,7 @@ void linkListInsert(linkList *L, int i, int e)
       count++;
     }
   
-  listNode *q = (listNode*)malloc(sizeof(listNode));
+  listNode *q = (listNode *)malloc(sizeof(listNode));
   q->data = e;
   q->next = p->next;
   p->next = q;
@@ -43,46 +43,49 @@ void linkListInsert(linkList *L, int i, int e)
 /* 删除结点 */
 void linkListDelete(linkList *L,int i)
 {
-  linkList *p = L;
+  listNode *p = L;
   int count;
   
   count = 0;
-  while (count < i-1) {
+  while (count < i - 1) {
       p = p->next;
       count++;
     }
   
   listNode *q = p->next;
   p->next = q->next;
-  free(q);
+  if (q != NULL) {
+      free(q);
+    }
 }
 
 int main()
 {
-  int X, Y;
-  scanf("%d", &X);
-  scanf("%d", &Y);
-  linkList L;
-  L.next = NULL;
+  int x, y;
+  scanf("%d", &x);
+  scanf("%d", &y);
+  linkList *L=(linkList *)malloc(sizeof(linkList));;
+  L->next = NULL;
   
   /* 给每个小朋友编号 */
-  for (int i = 0, j = 1; i < X && j <= X; i++, j++) {
-      linkListInsert(&L, j, i); 
+  int i, j;
+  for (i = 0, j = 1; i < x && j <= x; i++, j++) {
+      linkListInsert(L, j, i);  
     }
   
   int now = 1;
-  while (linkListLength(&L) != 1) {
+  while (linkListLength(L) != 1) {
       /* 得到需要删除的小朋友的编号 */
-      now = (now + Y -1 ) % linkListLength(&L);
+      now = (now + y -1 ) % linkListLength(L);
       if (now == 0) {
-            now = linkListLength(&L);
+            now = linkListLength(L);
           }
-      /* 删除报出Y-1的小朋友 */
-      linkListDelete(&L, now);
+      /* 删除报出y-1的小朋友 */
+      linkListDelete(L, now);
     } 
   
   /* 输出最后留下来的小朋友编号 */
-  listNode *p = L.next;
+  linkList *p = L->next;
   printf("%d", p->data);
   return 0;
 }
