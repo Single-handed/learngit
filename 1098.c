@@ -64,7 +64,7 @@ int main()
   int x, y;
   scanf("%d", &x);
   scanf("%d", &y);
-  linkList *L=(linkList *)malloc(sizeof(linkList));;
+  linkList *L = (linkList *)malloc(sizeof(linkList));
   L->next = NULL;
   
   /* 给每个小朋友编号 */
@@ -86,6 +86,6 @@ int main()
   
   /* 输出最后留下来的小朋友编号 */
   linkList *p = L->next;
-  printf("%d", p->data);
+  printf("%d\n", p->data);
   return 0;
 }
