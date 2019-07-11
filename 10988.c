@@ -6,11 +6,12 @@ typedef struct listNode {
   struct listNode *next;
 } listNode, linkList;
 
+/* 插入结点 */
 void linkListInsert(linkList *L, int i, int data)
 {
   int count;
-  
   listNode *p = L;
+
   count = 0;
   while (count < i - 1) {
     p = p->next;
@@ -23,6 +24,7 @@ void linkListInsert(linkList *L, int i, int data)
   p->next = q;
 }
 
+/* 删除结点 */
 void linkListDelete(linkList *L, int i)
 {
   listNode *p = L;
@@ -39,6 +41,7 @@ void linkListDelete(linkList *L, int i)
   }
 }
 
+/* 获得链表长度 */
 int getLinkListLength(linkList *L)
 {
   listNode *p = L;
@@ -53,6 +56,7 @@ int getLinkListLength(linkList *L)
   return count; 
 }
 
+/* 输出链表 */
 void printfLinkList(linkList *L)
 {
   listNode *p = L;
@@ -60,8 +64,10 @@ void printfLinkList(linkList *L)
     p = p->next;
     printf("%d ", p->data);
   }
+
   printf("\n");
 }
+
 int main()
 {
   int x, y;
@@ -72,22 +78,24 @@ int main()
   
   linkList *L = (linkList *)malloc(sizeof(linkList));
   L->next = NULL;
-
-  /*  */
+  /* 初始化链表，为每个小朋友编号 */
   for (i = 0, j = 1; i < x; i++, j++) {
-    linkListInsert(L, i, j);
+    linkListInsert(L, j, i);
   }
 
   now = 1;
   while (getLinkListLength(L) > 1) {
+    /* 得到当前要删除的小朋友编号 */
     now = (now + y - 1) % getLinkListLength(L);
     if (now == 0) {
       now = getLinkListLength(L);
     }
+
+    /* 删除小朋友 */
     linkListDelete(L, now);
   }
 
+  /* 输出最后留下的小朋友编号 */
   printfLinkList(L);
-  printf("%d\n", getLinkListLength(L));
   return 0;
 }
