@@ -66,6 +66,7 @@ int main()
             } else {
                 if (j == n-1) {
                     printf("%d\n", a[i][j]);
+                    break;
                 }
 
                 printf("%d ", a[i][j]);
